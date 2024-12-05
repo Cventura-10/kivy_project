@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ section.name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> <!-- Optional: Link to CSS -->
+</head>
+<body>
+    <header>
+        <h1>{{ section.name }}</h1>
+    </header>
+
+    <main>
+        <section>
+            <p>{{ section.description }}</p>
+            <p><strong>Views:</strong> {{ section.views }}</p>
+        </section>
+
+        {% if section.audio_path %}
+        <section>
+            <h2>Audio Presentation</h2>
+            <audio controls>
+                <source src="{{ url_for('static', filename=section.audio_path) }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </section>
+        {% endif %}
+
+        {% if section.image_path %}
+        <section>
+            <h2>Related Image</h2>
+            <img src="{{ url_for('static', filename=section.image_path) }}" alt="{{ section.name }}" loading="lazy">
+        </section>
+        {% endif %}
+
+        <section>
+            <div>
+                <button id="like-button" onclick="likeSection()">Like</button>
+                <button id="accept-button" onclick="acceptSection()">Accept</button>
+            </div>
+            <div>
+                <p><strong>Likes:</strong> <span id="likes-count">{{ section.likes_count }}</span></p>
+                <p><strong>Acceptances:</strong> <span id="acceptances-count">{{ section.acceptances_count }}</span></p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <a href="{{ url_for('main.index') }}">Return to Home</a>
+    </footer>
+
+    <script>
+        async function likeSection() {
+            try {
+                const response = await fetch('{{ url_for("main.like_section", id=section.id) }}', { method: 'POST' });
+                const data = await response.json();
+                document.getElementById('likes-count').innerText = data.likes;
+            } catch (error) {
+                console.error('Error liking section:', error);
+            }
+        }
+
+        async function acceptSection() {
+            try {
+                const response = await fetch('{{ url_for("main.accept_section", id=section.id) }}', { method: 'POST' });
+                const data = await response.json();
+                document.getElementById('acceptances-count').innerText = data.acceptances;
+            } catch (error) {
+                console.error('Error accepting section:', error);
+            }
+        }
+    </script>
+</body>
+</html>

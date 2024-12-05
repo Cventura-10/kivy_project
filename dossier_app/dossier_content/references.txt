@@ -1,0 +1,4 @@
+Referencias:
+1. Dr. Ana López - Profesora Investigadora en Innovación Estratégica (email@example.com)
+2. Ing. Roberto Martínez - Director de Tecnología, TechCorp (email@example.com)
+3. M.Sc. Laura García - Consultora Senior en Gestión de Proyectos (email@example.com)

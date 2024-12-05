@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dossier{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+</head>
+<body>
+    <header class="header">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+        <h1 class="app-title">Dossier Application</h1>
+    </header>
+    <nav class="nav">
+        <ul>
+            {% for section in sections %}
+                <li><a href="{{ url_for('main.section', id=section.id) }}">{{ section.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
+    <main class="container">
+        {% block content %}
+        <div class="portada">
+            <h2>Candidatura a la Presidencia de la Cámara de Cuentas</h2>
+            <h3>Dr. Carlos Ventura</h3>
+            <img src="{{ url_for('static', filename='images/candidate.jpg') }}" alt="Dr. Carlos Ventura" class="candidate-photo">
+            <p class="vision-statement">Transformando la Transparencia y la Eficiencia</p>
+            <a href="{{ url_for('main.index') }}" class="btn">Volver al inicio</a>
+        </div>
+        {% endblock %}
+    </main>
+    <footer class="footer">
+        <p>&copy; 2024 Dr. Carlos Ventura</p>
+    </footer>
+</body>
+</html>
